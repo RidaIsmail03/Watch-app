@@ -22,6 +22,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    startAutoSlide();
     _pageController = PageController(viewportFraction: 0.8, initialPage: 1);
     super.initState();
   }
@@ -51,6 +52,23 @@ class _HomeState extends State<Home> {
           image: DecorationImage(image: NetworkImage(images[pagePosition]))
       ),
     );
+  }
+
+  void startAutoSlide() {
+    Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+      if (activePage < images.length - 1) {
+        activePage++;
+      } else {
+        activePage = 0;
+      }
+      if (_pageController.hasClients) {
+        _pageController.animateToPage(
+          activePage,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
   }
 
   @override
