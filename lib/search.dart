@@ -9,13 +9,13 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  // controller to store product pid
-  final TextEditingController _controllerID = TextEditingController();
-  String _text = ''; // displays product info or error message
+
+  final TextEditingController _controllerName = TextEditingController();
+  String _text = '';
 
   @override
   void dispose() {
-    _controllerID.dispose();
+    _controllerName.dispose();
     super.dispose();
   }
 
@@ -29,36 +29,58 @@ class _SearchState extends State<Search> {
   // called when user clicks on the find button
   void getProduct() {
     try {
-      int pid = int.parse(_controllerID.text);
-      searchProduct(update, pid); // search asynchronously for product record
-    }
-    catch(e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('wrong arguments')));
+      String name = _controllerName.text;
+      searchProduct(update, name); // search asynchronously for product record
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('wrong arguments')));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Page 1'),
-        centerTitle: true,
-      ),
-      body: Center(child: Column(children: [
-        const SizedBox(height: 10),
-        SizedBox(width: 200, child: TextField(controller: _controllerID, keyboardType: TextInputType.number,
-            decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter ID'))),
-        const SizedBox(height: 10),
-        ElevatedButton(onPressed: getProduct,
-            child: const Text('Find', style: TextStyle(fontSize: 18))),
-        const SizedBox(height: 10),
-        Center(child: SizedBox(width: 200, child: Flexible(child: Text(_text,
-            style: const TextStyle(fontSize: 18))))),
-      ],
-
-      ),
-
-      ),
+        appBar: AppBar(
+          title: const Text('Search for watches'),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              SizedBox(
+                  width: 200,
+                  child: TextField(
+                      controller: _controllerName,
+                      decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter watch name')
+                  )
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                  onPressed: getProduct,
+                  child: const Text('Search', style: TextStyle(fontSize: 18))),
+              const SizedBox(height: 10),
+              Center(
+                  child: Container(
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15), color: Colors.black87),
+                      padding: const EdgeInsets.all(5),
+                      width: width * 0.9,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(height: 15,),
+                            Column(
+                              children: [
+                                Text(_text, style: const TextStyle(color: Colors.white, fontSize: 25),),
+                              ],
+                            ),
+                          ])
+                      )
+              )
+            ],
+          ),
+        )
     );
   }
 }
