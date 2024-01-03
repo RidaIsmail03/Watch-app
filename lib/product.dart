@@ -49,11 +49,10 @@ void updateProducts(Function(bool success) update) async {
 }
 
 // searches for a single product using product pid
-void searchProduct(Function(String text) update, int pid) async {
+void searchProduct(Function(String text) update, String name) async {
   try {
-    final url = Uri.https(_baseURL, 'searchProduct.php', {'pid':'$pid'});
-    final response = await http.get(url)
-        .timeout(const Duration(seconds: 5));
+    final url = Uri.https(_baseURL, 'searchProduct.php', {'name':name});
+    final response = await http.get(url).timeout(const Duration(seconds: 5));
     _products.clear();
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
