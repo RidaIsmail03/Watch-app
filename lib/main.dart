@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
-import 'men.dart';
 
 void main() => runApp(const MyApp());
 
@@ -11,7 +10,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'xyz Shop',
+      title: 'MR Luxury Shop',
       home: Home(),
     );
   }
