@@ -3,6 +3,7 @@ import 'men.dart';
 import 'women.dart';
 import 'kids.dart';
 import 'wishlist.dart';
+import 'login.dart';
 
 class NavDrawer extends StatefulWidget {
   const NavDrawer({super.key});
@@ -66,7 +67,13 @@ class _NavDrawerState extends State<NavDrawer> {
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text('LOGIN/REGISTER', style: TextStyle(fontSize: 20),),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const Login(),
+                  )
+              )
+            },
           ),
         ],
       ),
